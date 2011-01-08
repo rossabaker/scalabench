@@ -18,9 +18,10 @@ class ScalabenchTest extends WordSpec with ShouldMatchers {
       count should be (10)
     }
 
-    "return its results" in {
-      val results = repeat(3) { "foo" }
-      results should be (List("foo", "foo", "foo"))
+    "return its results in order" in {
+      var count = 0
+      val results = repeat(3) { count += 1; count }
+      results should be (List(1, 2, 3))
     }
   }
 

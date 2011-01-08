@@ -1,5 +1,6 @@
 package com.rossabaker
 
+import scala.collection.immutable.Vector
 import scala.math._
 
 package object scalabench {
@@ -10,14 +11,14 @@ package object scalabench {
     TimedResult(result, elapsed)
   }
 
-  def repeat[A](count: Int)(f: =>A): List[A] = {
+  def repeat[A](count: Int)(f: =>A): Seq[A] = {
     var result: List[A] = Nil
     for (i <- 0 until count)
       result = f :: result
-    result
+    result.reverse
   }
 
-  def benchmark(warmupTrials: Int, timedTrials: Int)(f: =>Any): List[Long] = {
+  def benchmark(warmupTrials: Int, timedTrials: Int)(f: =>Any): Seq[Long] = {
     repeat(warmupTrials)(f)
     repeat(timedTrials)(time(f).nanos)
   }
