@@ -10,7 +10,7 @@ The framework is available through a package object:
 
     import com.rossabaker.scalabench._
 
-# `time`
+### time
 
 Executes a block.  Returns a case class with its result and the number of nanoseconds it took to run.
 
@@ -20,18 +20,18 @@ Executes a block.  Returns a case class with its result and the number of nanose
     scala> time { xs.sorted }                                   
 	res0: TimedResult[List[Int]] = TimedResult(List(1, 2, ..., 10000),92164651) 
 
-# `benchmark`
+### benchmark
 
 Takes a number of untimed warmup trials, a number of timed trials, and a block. Returns a list of the nanoseconds elapsed to execute the block per timed trial.
 
     scala> benchmark(100,1000) { xs.sorted }  
     res1: List[Long] = List(2254514, 2321843, 2386586, 2286572, 2251094, ...)
 
-# `report`
+### report
 
 Takes the output of benchmark, and prints some statistics on the results:
 
-    scala> report(res2)
+    scala> report(res1)
 	Mean:          0.005289402 s
 	Min:           0.002092340 s
 	25th %ile:     0.002224026 s
