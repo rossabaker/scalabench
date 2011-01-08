@@ -24,19 +24,16 @@ class ScalabenchTest extends WordSpec with ShouldMatchers {
     }
   }
 
-  "run" should {
-    // Bummer... name clash with ScalaTest
-    import com.rossabaker.scalabench.{run => sbrun}
-
+  "benchmark" should {
     "run the function warmup + trials times" in {
       var count = 0
-      sbrun(5, 10) { count += 1 }
+      benchmark(5, 10) { count += 1 }
       count should be (15)
     }
 
     "return only the times from trials" in {
       var count = 0
-      val results = sbrun(5, 10) { "foo" }
+      val results = benchmark(5, 10) { "foo" }
       results.size should be (10)
     }
   }

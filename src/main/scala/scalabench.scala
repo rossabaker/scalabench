@@ -17,9 +17,9 @@ package object scalabench {
     result
   }
 
-  def run(warmupTrials: Int, timedTrials: Int)(f: =>Any): List[Long] = {
+  def benchmark(warmupTrials: Int, timedTrials: Int)(f: =>Any): List[Long] = {
     repeat(warmupTrials)(f)
-    repeat(timedTrials)(time(f)) map { _.nanoseconds }
+    repeat(timedTrials)(time(f)) map { _.nanos }
   }
 
   def mean(xs: Seq[Double]): Double = xs.sum.toDouble / xs.size
@@ -34,17 +34,17 @@ package object scalabench {
     }
   }
 
-  def benchmark(warmupTrials: Int, timedTrials: Int)(f: =>Any) {
-    val times = run(warmupTrials, timedTrials)(f) map { _ / 1e9 }
-    println("Mean:      %15.9f s".format(mean(times)))
-    println("Min:       %15.9f s".format(times.min))
-    println("25th %%ile: %15.9f s".format(percentile(times, 0.25)))
-    println("Median:    %15.9f s".format(percentile(times, 0.5)))
-    println("75th %%ile: %15.9f s".format(percentile(times, 0.75)))
-    println("Max:       %15.9f s".format(times.max))
+  def report(nanos: Seq[Long])(f: =>Any) {
+    val seconds = nanos map { _ / 1e9 }
+    println("Mean:      %15.9f s".format(mean(seconds)))
+    println("Min:       %15.9f s".format(seconds.min))
+    println("25th %%ile: %15.9f s".format(percentile(seconds, 0.25)))
+    println("Median:    %15.9f s".format(percentile(seconds, 0.5)))
+    println("75th %%ile: %15.9f s".format(percentile(seconds, 0.75)))
+    println("Max:       %15.9f s".format(seconds.max))
   }
 }
 
 package scalabench {
-  case class TimedResult[+A](result: A, nanoseconds: Long)
+  case class TimedResult[+A](result: A, nanos: Long)
 }
