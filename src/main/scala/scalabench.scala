@@ -19,7 +19,7 @@ package object scalabench {
 
   def benchmark(warmupTrials: Int, timedTrials: Int)(f: =>Any): List[Long] = {
     repeat(warmupTrials)(f)
-    repeat(timedTrials)(time(f)) map { _.nanos }
+    repeat(timedTrials)(time(f).nanos)
   }
 
   def mean(xs: Seq[Double]): Double = xs.sum.toDouble / xs.size
