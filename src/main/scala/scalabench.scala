@@ -34,7 +34,7 @@ package object scalabench {
     }
   }
 
-  def report(nanos: Seq[Long])(f: =>Any) {
+  def report(nanos: Seq[Long]) {
     val seconds = nanos map { _ / 1e9 }
     println("Mean:      %15.9f s".format(mean(seconds)))
     println("Min:       %15.9f s".format(seconds.min))
